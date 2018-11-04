@@ -6,6 +6,7 @@ use App\Models\College\College;
 use App\Models\Comments\Comments;
 use App\Models\Course\Profile\CourseProfile;
 use App\Models\Intakes\Intakes;
+use App\Models\Locations\Locations;
 use App\Models\Threads\Threads;
 use App\Models\Topics\Topics;
 use App\Models\Views\Views;
@@ -68,6 +69,11 @@ class Course extends Model
     public function views()
     {
         return $this->morphMany(Views::class, 'viewable');
+    }
+
+    public function offeringBranches()
+    {
+        return $this->morphToMany(Locations::class, 'locatable');
     }
 
 }

@@ -16,10 +16,17 @@
                         <li><a href="{{route('home')}}">Dashboard</a></li>
                     </ol>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
 
+            @include('common.session_messages')
+
+            <div class="row mb-lg-4">
+                <div class="col">
+                    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#CreateCourseModal">
+                        <i class="fa fa-plus"></i> Create Course
+                    </button>
+                </div>
+            </div>
             <!-- ============================================================== -->
             <!-- table -->
             <!-- ============================================================== -->
@@ -54,9 +61,9 @@
                                 @foreach(auth()->user()->courses as $course)
                                     <tr>
                                         <td>{{$course->course_name}}</td>
-                                        <td>{{$course->profile->course_description}}</td>
-                                        <td>{{$course->profile->credits}}</td>
-                                        <td>{{$course->profile->course_duration}}</td>
+                                        <td>{{($course->profile != null) ? $course->profile->course_description : ''}}</td>
+                                        <td>{{($course->profile != null) ? $course->profile->credits : ''}}</td>
+                                        <td>{{($course->profile != null) ? $course->profile->course_duration : ''}}</td>
                                         <td>{{$course->views->count()}}</td>
                                         <td>
                                             @if($course->active)
@@ -88,4 +95,72 @@
     <!-- ============================================================== -->
     <!-- End Page Content -->
     <!-- ============================================================== -->
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="CreateCourseModal" tabindex="-1" role="dialog" aria-labelledby="CreateCourseModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Create a course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('courses.create.post')}}" method="post" id="courseCreateModalForm">
+                        @csrf
+                        <div class="form-group">
+                            <label for="inputCourseName">Course Name</label>
+                            <input type="text" class="form-control" required id="inputCourseName" aria-describedby="courseName" placeholder="Course Name" name="course_name">
+                            {{--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>--}}
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCourseDesc">Course Description</label>
+                            <textarea rows="3" class="form-control" required id="inputCourseDesc" aria-describedby="courseDesc" placeholder="Course Name" name="course_description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCourseCredits">Credits</label>
+                            <input type="number" class="form-control" required id="inputCourseCredits" aria-describedby="courseCredits" placeholder="Course Credits" name="course_credits">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCourseQualifications">Qualifications</label>
+                            <textarea rows="3" class="form-control" required id="inputCourseQualifications" aria-describedby="courseQualifications" placeholder="Course Qualifications" name="course_qualifications"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCourseDuration">Duration (years)</label>
+                            <input type="number" class="form-control" required id="inputCourseDuration" aria-describedby="courseDuration" placeholder="Course Duration" name="course_duration">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputCourseBranches">Offering Branches</label>
+                            <select id="inputCourseBranches" required class="form-control" name="branches[]" multiple="multiple">
+                                @foreach(auth()->user()->locations as $branch)
+                                    <option value="{{$branch->id}}">{{$branch->city}} Campus</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputCourseIntakes">Intakes</label>
+                            <select required name="intakes[]" size="3" id="inputCourseIntakes" class="form-control selectpicker" multiple data-live-search="true">
+                                @foreach(auth()->user()->intakes as $intake)
+                                    <option value="{{$intake->id}}">{{$intake->intake_alias}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('courseCreateModalForm').submit();">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2();
+    });
+</script>

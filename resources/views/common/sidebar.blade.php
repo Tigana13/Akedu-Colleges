@@ -14,10 +14,10 @@
                 <a href="{{route('courses.index')}}" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Courses</a>
             </li>
             <li>
-                <a href="#" class="waves-effect"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Facilities</a>
+                <a href="{{route('facilities.index')}}" class="waves-effect"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Facilities</a>
             </li>
             <li>
-                <a href="#" class="waves-effect"><i class="fa fa-font fa-fw" aria-hidden="true"></i>Intakes</a>
+                <a href="{{route('intakes.index')}}" class="waves-effect"><i class="fa fa-font fa-fw" aria-hidden="true"></i>Intakes</a>
             </li>
 
         </ul>

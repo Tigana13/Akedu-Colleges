@@ -2,6 +2,7 @@
 
 namespace App\Models\Facility;
 
+use App\Models\Views\Views;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
@@ -24,4 +25,10 @@ class Facility extends Model
 
         return $array;
     }
+
+    public function views()
+    {
+        return $this->morphMany(Views::class, 'viewable');
+    }
+
 }

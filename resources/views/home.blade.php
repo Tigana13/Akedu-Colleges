@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="white-box analytics-info">
-                        <h3 class="box-title">Courses Listed</h3>
+                        <h3 class="box-title">Certified Courses</h3>
                         <ul class="list-inline two-part">
                             <li>
                                 <div id="sparklinedash2"></div>
