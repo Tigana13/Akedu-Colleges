@@ -55,6 +55,7 @@
                                     <th>ACTIVE</th>
                                     <th>CERTIFIED</th>
                                     <th>APPROVAL RATING</th>
+                                    <th>ACTIONS</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -78,6 +79,10 @@
                                             @else
                                                 <span class="label label-danger">Not certified</span>
                                             @endif
+                                        </td>
+                                        <td>{{round($course->sentiment_score_average, 4) * 100}}%</td>
+                                        <td>
+                                            <a href="{{route('course.profile', $course->id)}}" class="btn btn-info">View</a>
                                         </td>
                                     </tr>
                                 @endforeach

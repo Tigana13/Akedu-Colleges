@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
@@ -21,6 +19,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Courses
 Route::get('/courses', 'Courses\CoursesController@index')->name('courses.index');
+Route::get('/course/profile/{id}', 'Courses\CoursesController@courseProfile')->name('course.profile');
 Route::post('/courses/create', 'Courses\CoursesController@addCourse')->name('courses.create.post');
 
 //Facilities

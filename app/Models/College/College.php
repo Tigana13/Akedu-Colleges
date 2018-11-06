@@ -12,7 +12,6 @@ use App\Models\Locations\Locations;
 use App\Models\Threads\Threads;
 use App\Models\Topics\Topics;
 use App\Models\Views\Views;
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
@@ -22,8 +21,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class College extends Authenticatable
 {
     use Searchable, SoftDeletes;
-
-    protected $fillable = ['college_name', 'college_email', 'password'];
 
     public function searchableAs()
     {
@@ -92,11 +89,6 @@ class College extends Authenticatable
     public function comments()
     {
         return $this->morphMany(Comments::class, 'commentable');
-    }
-
-    public function students()
-    {
-        return $this->hasManyThrough(User::class, CollegeProfile::class, 'college_id', 'id');
     }
 
 }

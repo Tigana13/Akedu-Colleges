@@ -8,6 +8,9 @@
         </div>
         <ul class="nav" id="side-menu">
             <li style="padding: 70px 0 0;">
+                <a href="#" class="waves-effect">AKEDU COLLEGES</a>
+            </li>
+            <li>
                 <a href="{{route('home')}}" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
             </li>
             <li>

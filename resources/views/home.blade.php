@@ -53,7 +53,7 @@
                             <li>
                                 <div id="sparklinedash3"></div>
                             </li>
-                            <li class="text-right"><i class="ti-arrow-up text-info"></i> <span class="counter text-info">{{auth()->user()->students->count()}}</span></li>
+                            <li class="text-right"><i class="ti-arrow-up text-info"></i> <span class="counter text-info">{{(auth()->user()->students != null) ? auth()->user()->students->count(): ''}}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -67,33 +67,26 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="white-box">
-                        <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
-                            <select class="form-control pull-right row b-none">
-                                <option>March 2017</option>
-                                <option>April 2017</option>
-                                <option>May 2017</option>
-                                <option>June 2017</option>
-                                <option>July 2017</option>
-                            </select>
-                        </div>
-                        <h3 class="box-title">Courses recently recommended to students</h3>
+                        <h3 class="box-title">Most popular courses</h3>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>COURSE NAME</th>
-                                    <th># OF RECOMMENDATIONS</th>
-                                    <th>PUBLIC APPROVAL RATING</th>
+                                    <th>Course Name</th>
+                                    <th>Popularity Degree</th>
+                                    <th>Public Approval Rating</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach(auth()->user()->courses as $course)
+                                @foreach(auth()->user()->courses->sortByDesc('sentiment_magnitude_average') as $course)
                                     <tr>
-                                        <td>7</td>
-                                        <td class="txt-oflo"></td>
-                                        <td></td>
-                                        <td class="txt-oflo">April 22, 2017</td>
+                                        <td>{{$course->course_name}}</td>
+                                        <td>{{round($course->sentiment_magnitude_average, 3) * 100}}%</td>
+                                        <td>{{round($course->sentiment_score_average, 3) * 100}}%</td>
+                                        <td>
+                                            <a href="{{route('course.profile', $course->id)}}" class="btn btn-info">View</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
